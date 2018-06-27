@@ -1,0 +1,91 @@
+---
+title: "FIFA_2018"
+author: "Jonathan"
+date: "June 22, 2018"
+output: html_document
+---
+
+```{r}
+library(readr)
+library(dplyr)
+library(magrittr)
+library(ggplot2)
+require(sas7bdat)
+require(data.table)
+require(noncensus)
+require(usmap)
+library(stringr)
+require(ggmap)
+library(tidyr)
+library(gridExtra)
+#install.packages("grid")
+
+setwd("C:/Users/josanchez/Downloads")
+
+
+world_cup <- read_csv("World Cup Bracket (Responses) - Form Responses 1.csv") 
+
+
+check <- toupper(c("uruguay","portugal","france","argentina","brazil","mexico","spain","russia","croatia","denmark","sweden","switzerland"))
+#ob1 <- as.vector(world_cup$`Round 1 - Top 16`[1]) %>% strsplit(",") %>% unlist() %>% str_replace_all(" ","")
+
+
+x <- 1
+world_cup[,"point"] <- NA
+while (x <= nrow(world_cup)) {
+ ob1 <- toupper(as.vector(world_cup$`Round 1 - Top 16`[x]) %>% strsplit(",") %>% unlist() %>% str_replace_all(" ",""))
+world_cup[x,"point"] <- sum(ob1 %in% check)
+x <- x +1
+}
+ 
+
+ 
+
+```
+
+
+##string Split
+```{r}
+
+#sting split
+z <- NA
+for (i in 1:16) {
+ z[i] <- paste("country",as.character(i))
+ 
+}
+
+w1 <- world_cup %>% select(Name,`Round 1 - Top 16`) %>% separate(`Round 1 - Top 16`,z)
+
+data_sweet16 <- world_cup %>% select(Name,point) %>% right_join(w1, by = "Name")
+
+data_sweet16 <- arrange(data_sweet16,point)
+#sum(w1[1,2:17] %in% check)
+
+
+
+
+
+```
+
+
+```{r}
+p1 <- data_sweet16 %>% arrange(point) %>% ggplot(aes(x=reorder(Name,-point), y= point)) + geom_bar(stat = "identity", aes(fill = point))  +theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) +
+  geom_text(aes(label=point),vjust=0) +
+  scale_fill_distiller(name = "point", palette = "Reds", direction = 1)
+
+p2 <- data_sweet16 %>% arrange(point) %>% ggplot(aes(x=Name, y= point, color = Name,fill = Name)) + geom_col() +theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) +
+  geom_text(aes(label=point),vjust=0)
+
+
+grid.arrange(p1, p2)
+
+
+
+
+p1 
+p2
+
+
+
+```
+
