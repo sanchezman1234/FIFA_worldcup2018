@@ -5,7 +5,7 @@ date: "June 22, 2018"
 output: html_document
 ---
 
-```{r}
+```{r echo=FALSE, error= FALSE , message= FALSE}
 library(readr)
 library(dplyr)
 library(magrittr)
@@ -26,14 +26,14 @@ setwd("C:/Users/josanchez/Downloads")
 world_cup <- read_csv("World Cup Bracket (Responses) - Form Responses 1.csv") 
 
 
-check <- toupper(c("uruguay","portugal","france","argentina","brazil","mexico","spain","russia","croatia","denmark","sweden","switzerland"))
+check <- toupper(c("uruguay","portugal","france","argentina","brazil","mexico","belgium","japan","spain","russia","croatia","denmark","sweden","switzerland","colombia","england"))
 #ob1 <- as.vector(world_cup$`Round 1 - Top 16`[1]) %>% strsplit(",") %>% unlist() %>% str_replace_all(" ","")
 
 
 x <- 1
 world_cup[,"point"] <- NA
 while (x <= nrow(world_cup)) {
- ob1 <- toupper(as.vector(world_cup$`Round 1 - Top 16`[x]) %>% strsplit(",") %>% unlist() %>% str_replace_all(" ",""))
+ ob1 <- toupper(as.vector(world_cup$`Round 1 - Top 16`[x]) %>% strsplit(",") %>% unlist()%>% str_replace_all(" ",""))
 world_cup[x,"point"] <- sum(ob1 %in% check)
 x <- x +1
 }
@@ -45,7 +45,7 @@ x <- x +1
 
 
 ##string Split
-```{r}
+```{r echo=FALSE, error= FALSE , message= FALSE}
 
 #sting split
 z <- NA
@@ -54,7 +54,7 @@ for (i in 1:16) {
  
 }
 
-w1 <- world_cup %>% select(Name,`Round 1 - Top 16`) %>% separate(`Round 1 - Top 16`,z)
+w1 <- world_cup %>% select(Name,`Round 1 - Top 16`) %>% separate(`Round 1 - Top 16`,z,sep = ",")
 
 data_sweet16 <- world_cup %>% select(Name,point) %>% right_join(w1, by = "Name")
 
@@ -67,8 +67,8 @@ data_sweet16 <- arrange(data_sweet16,point)
 
 ```
 
-
-```{r}
+#Table and Chart First Round
+```{r echo=FALSE, error= FALSE , message= FALSE}
 p1 <- data_sweet16 %>% arrange(point) %>% ggplot(aes(x=reorder(Name,-point), y= point)) + geom_bar(stat = "identity", aes(fill = point))  +theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) +
   geom_text(aes(label=point),vjust=0) +
   scale_fill_distiller(name = "point", palette = "Reds", direction = 1)
@@ -77,7 +77,7 @@ p2 <- data_sweet16 %>% arrange(point) %>% ggplot(aes(x=Name, y= point, color = N
   geom_text(aes(label=point),vjust=0)
 
 
-grid.arrange(p1, p2)
+#grid.arrange(p1, p2)
 
 
 
@@ -85,7 +85,12 @@ grid.arrange(p1, p2)
 p1 
 p2
 
+print(arrange(data_sweet16,point))
+
+arrange(data_sweet16,point)
 
 
+#setwd("~/Git_hub/FIFA_worldcup2018")
+#write_csv(data_sweet16,"sweet16.csv")
 ```
 
