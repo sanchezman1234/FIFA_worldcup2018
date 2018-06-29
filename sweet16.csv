@@ -1,17 +1,17 @@
 Name,point,country 1,country 2,country 3,country 4,country 5,country 6,country 7,country 8,country 9,country 10,country 11,country 12,country 13,country 14,country 15,country 16
-Amalia,0,Egypt,Uruguay,France,Australia,Brazil,Costa,Rica,Belgium,England,Portugal,Spain,Argentina,Iceland,Germany,Mexico,Colombia
-Caitrin,0,Egypt,Uruguay,Peru,Denmark,Brazil,Switzerland,Tunisia,England,Portugal,Spain,Argentina,Croatia,Germany,Mexico,Senegal,Colombia
-Matt,0,Egypt,Uruguay,France,Peru,Brazil,Switzerland,Belgium,England,Portugal,Spain,Argentina,Iceland,Germany,Korea,Republic,Poland
-Carlos Litovich,1,Russia,Uruguay,France,Peru,Brazil,Costa,Rica,Belgium,England,Portugal,Spain,Argentina,Croatia,Germany,Mexico,Senegal
-Jonathan Sanchez,1,Russia,Egypt,France,Peru,Brazil,Costa,Rica,Belgium,England,Portugal,Spain,Argentina,Iceland,Germany,Mexico,Poland
-Kyle B,1,Russia,Uruguay,France,Peru,Brazil,Costa,Rica,Belgium,England,Portugal,Spain,Argentina,Iceland,Germany,Mexico,Poland
-Andrew,1,Russia,Uruguay,France,Peru,Brazil,Serbia,Belgium,England,Portugal,Spain,Argentina,Iceland,Germany,Mexico,Colombia,Japan
-Shawn Banagis,1,Russia,Uruguay,France,Denmark,Brazil,Serbia,Belgium,England,Portugal,Spain,Argentina,Croatia,Germany,Sweden,Poland,Colombia
-Michael,1,Russia,Uruguay,France,Peru,Brazil,Costa,Rica,Belgium,England,Portugal,Spain,Argentina,Nigeria,Germany,Mexico,Poland
-Andrea B,1,Russia,Uruguay,France,Denmark,Brazil,Serbia,Belgium,Panama,Portugal,Morocco,Argentina,Nigeria,Germany,Mexico,Poland,Japan
-Leigh Ann,1,Egypt,Uruguay,France,Denmark,Brazil,Serbia,Belgium,England,Portugal,Spain,Argentina,Croatia,Germany,Mexico,Poland,Colombia
-Hailin,1,Russia,Uruguay,France,Denmark,Brazil,Costa,Rica,Belgium,England,Portugal,Spain,Argentina,Croatia,Germany,Sweden,Poland
-Kyle H,1,Russia,Uruguay,France,Peru,Brazil,Costa,Rica,Belgium,England,Portugal,Spain,Argentina,Nigeria,Germany,Mexico,Poland
-Naya Heyer,1,Russia,Saudi,Arabia,France,Denmark,Brazil,Switzerland,Belgium,England,Portugal,Spain,Argentina,Croatia,Germany,Korea,Republic
-Omar,1,Russia,Egypt,France,Denmark,Brazil,Serbia,Belgium,England,Portugal,Spain,Argentina,Croatia,Germany,Mexico,Senegal,Colombia
-Carolina,1,Russia,Uruguay,France,Denmark,Brazil,Serbia,Belgium,England,Portugal,Spain,Croatia,Nigeria,Germany,Mexico,Poland,Colombia
+Jonathan Sanchez,10,Russia, Egypt, France, Peru, Brazil, Costa Rica, Belgium, England, Portugal, Spain, Argentina, Iceland, Germany, Mexico, Poland, Colombia
+Andrea B,10,Russia, Uruguay, France, Denmark, Brazil, Serbia, Belgium, Panama, Portugal, Morocco, Argentina, Nigeria, Germany, Mexico, Poland, Japan
+Matt,10,Egypt, Uruguay, France, Peru, Brazil, Switzerland, Belgium, England, Portugal, Spain, Argentina, Iceland, Germany, Korea Republic, Poland, Colombia
+Kyle B,11,Russia, Uruguay, France, Peru, Brazil, Costa Rica, Belgium, England, Portugal, Spain, Argentina, Iceland, Germany, Mexico, Poland, Colombia
+Michael,11,Russia, Uruguay, France, Peru, Brazil, Costa Rica, Belgium, England, Portugal, Spain, Argentina, Nigeria, Germany, Mexico, Poland, Colombia
+Amalia,11,Egypt, Uruguay, France, Australia, Brazil, Costa Rica, Belgium, England, Portugal, Spain, Argentina, Iceland, Germany, Mexico, Colombia, Japan
+Kyle H,11,Russia, Uruguay, France, Peru, Brazil, Costa Rica, Belgium, England, Portugal, Spain, Argentina, Nigeria, Germany, Mexico, Poland, Colombia
+Caitrin,11,Egypt, Uruguay, Peru, Denmark, Brazil, Switzerland, Tunisia, England, Portugal, Spain, Argentina, Croatia, Germany, Mexico, Senegal, Colombia
+Carlos Litovich,12,Russia, Uruguay, France, Peru, Brazil, Costa Rica, Belgium, England, Portugal, Spain, Argentina, Croatia, Germany, Mexico, Senegal, Colombia
+Andrew,12,Russia, Uruguay, France, Peru, Brazil, Serbia, Belgium, England, Portugal, Spain, Argentina, Iceland, Germany, Mexico, Colombia, Japan
+Leigh Ann,12,Egypt, Uruguay, France,Denmark, Brazil, Serbia, Belgium, England, Portugal, Spain, Argentina, Croatia, Germany, Mexico, Poland, Colombia
+Naya Heyer,12,Russia, Saudi Arabia, France, Denmark, Brazil, Switzerland, Belgium, England, Portugal, Spain, Argentina, Croatia, Germany, Korea Republic, Poland, Japan
+Omar,12,Russia, Egypt, France, Denmark, Brazil, Serbia, Belgium, England, Portugal, Spain, Argentina, Croatia, Germany, Mexico, Senegal, Colombia
+Carolina,12,Russia, Uruguay, France, Denmark, Brazil, Serbia, Belgium, England, Portugal, Spain, Croatia, Nigeria, Germany, Mexico, Poland, Colombia
+Shawn Banagis,13,Russia, Uruguay, France, Denmark, Brazil, Serbia, Belgium, England, Portugal, Spain, Argentina, Croatia, Germany, Sweden, Poland, Colombia
+Hailin,13,Russia, Uruguay, France, Denmark, Brazil, Costa Rica, Belgium, England, Portugal, Spain, Argentina, Croatia, Germany, Sweden, Poland, Japan
