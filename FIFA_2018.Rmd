@@ -16,7 +16,8 @@ require(noncensus)
 require(usmap)
 library(stringr)
 require(ggmap)
-library(tidyr)
+
+
 library(gridExtra)
 #install.packages("grid")
 
@@ -62,17 +63,17 @@ world_cup %<>% mutate(total = point + point2)
 ```{r echo=FALSE, error= FALSE , message= FALSE}
 
 #sting split
-z <- NA
-for (i in 1:16) {
+z  <- NA
+for (i in 1:8) {
  z[i] <- paste("country",as.character(i))
  
 }
 
-w1 <- world_cup %>% select(Name,`Round 1 - Top 16`) %>% separate(`Round 1 - Top 16`,z,sep = ",")
+w1 <- world_cup %>% select(Name,`Round 2 - Top 8`) %>% separate(`Round 2 - Top 8`,z,sep = ",")
 
-data_sweet16 <- world_cup %>% select(Name,point) %>% right_join(w1, by = "Name")
+data_sweet16 <- world_cup %>% select(Name,total,round2 = point2) %>% right_join(w1, by = "Name")
 
-data_sweet16 <- arrange(data_sweet16,point)
+data_sweet16 <- arrange(data_sweet16,total)
 #sum(w1[1,2:17] %in% check)
 
 
@@ -83,9 +84,9 @@ data_sweet16 <- arrange(data_sweet16,point)
 
 #Table and Chart First Round
 ```{r echo=FALSE, error= FALSE , message= FALSE}
-p1 <- data_sweet16 %>% arrange(point) %>% ggplot(aes(x=reorder(Name,-point), y= point)) + geom_bar(stat = "identity", aes(fill = point))  +theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) +
-  geom_text(aes(label=point),vjust=0) +
-  scale_fill_distiller(name = "point", palette = "Reds", direction = 1)
+p1 <- world_cup %>% arrange(total) %>% ggplot(aes(x=reorder(Name,-total), y= total)) + geom_bar(stat = "identity", aes(fill = total))  +theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) +
+  geom_text(aes(label=total),vjust=0) +
+  scale_fill_distiller(name = "total", palette = "Reds", direction = 1)
 
 p2 <- data_sweet16 %>% arrange(point) %>% ggplot(aes(x=Name, y= point, color = Name,fill = Name)) + geom_col() +theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) +
   geom_text(aes(label=point),vjust=0)
