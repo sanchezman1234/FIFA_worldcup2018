@@ -1,188 +1,110 @@
 ---
-title: "Refrence_content"
+title: "FIFA_2018"
 author: "Jonathan"
-date: "June 5, 2018"
+date: "June 22, 2018"
 output: html_document
 ---
 
-# PRoc contents from SAS where exported to CSV  in order to be used as  interactive guide in Shinny
+```{r echo=FALSE, error= FALSE , message= FALSE}
+library(readr)
+library(dplyr)
+library(magrittr)
+library(ggplot2)
+require(sas7bdat)
+require(data.table)
+require(noncensus)
+require(usmap)
+library(stringr)
+require(ggmap)
+library(tidyr)
+library(gridExtra)
+#install.packages("grid")
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-
-packs<-c("dplyr","magrittr","readr","ggplot2")
-lapply(packs,require, character.only = TRUE)
+setwd("C:/Users/josanchez/Downloads")
 
 
+world_cup <- read_csv("World Cup Bracket (Responses) - Form Responses 1.csv") 
 
-#library(dplyr)
-#library(readr)
-#library(shiny)
-#library(tidyr)
-library(sas7bdat)
 
-setwd("E:\\Users\\josanchez\\References")
+check <- toupper(c("uruguay","portugal","france","argentina","brazil","mexico","belgium","japan","spain","russia","croatia","denmark","sweden","switzerland","colombia","england"))
+#ob1 <- as.vector(world_cup$`Round 1 - Top 16`[1]) %>% strsplit(",") %>% unlist() %>% str_replace_all(" ","")
 
-read_cont <- function(read = "TED.csv") {
-  x <- read_csv(read)  
-  x %<>% select(NAME,LABEL,FORMAT)
-  return(x)
+check2 <- toupper(c("uruguay","france","brazil","belgium","russia","croatia","sweden","england"))
+
+
+x <- 1
+world_cup[,"point"] <- NA
+while (x <= nrow(world_cup)) {
+ ob1 <- toupper(as.vector(world_cup$`Round 1 - Top 16`[x]) %>% strsplit(",") %>% unlist()%>% str_replace_all(" ",""))
+world_cup[x,"point"] <- sum(ob1 %in% check)
+x <- x +1
 }
 
-#read Files
-list.files(pattern = "csv")
 
-TED <- read_cont( read = "E:\\Users\\josanchez\\References\\TED.CSV")
-CRF_allo <- read_cont(read = "E:\\Users\\josanchez\\References\\CRF_allo.csv")
-CRF_auto <- read_cont(read = "E:\\Users\\josanchez\\References\\CRF_auto.csv")
-#Lk1801_cont <- read_cont("E:\\Users\\josanchez\\References\\LK1801_content.csv")
-LK1801 <- read.sas7bdat('E:/Users/josanchez/WC_datastes/LK-1801/SAS_programs/Sub_programs/final.sas7bdat')
-
-x<- c("disrelhi", "cldzashi", 'frelpshi', 'fsrlbrhi', 'cyrlbrhi', 'relprghi', 'clnrelhig', 'cytrelhig', 'molrelhig', 'amstathi')
-x[x%in% TED$NAME]
-
-
-names <-as.data.frame(names(LK1801))
-
-```
-##names Check for specific cytogenetics 
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-#function for txt search in the variables
-cytosearch <- function(x= CRF,pattern= "f3id")
-{
-  x <- x[agrepl(pattern,x$NAME),]
-  return(x)
+#round2 
+y <- 1
+world_cup[,"point2"] <- NA
+while (y <= nrow(world_cup)) {
+ ob1 <- toupper(as.vector(world_cup$`Round 2 - Top 8`[y]) %>% strsplit(",") %>% unlist()%>% str_replace_all(" ",""))
+world_cup[y,"point2"] <- 2 *sum(ob1 %in% check2)
+y <- y +1
 }
 
-#create txt matching vectors
-F3_ted <-  cytosearch(x= TED, pattern = "f3id") %>% mutate(source = "TED")
-F3_CRF <- cytosearch(x= CRF, pattern = "f3id") %>% mutate(source = 'CRF')
 
-F3 <- F3_CRF %>% filter(NAME %in% (F3_ted$NAME))
+#adition of the vectors for the total 
 
-#NPM1
-npm1_ted <-  cytosearch(x= TED, pattern = "npm1") %>% mutate(source = 'TED')
-npm1_CRF <- cytosearch(x= CRF, pattern = "npm1") %>% mutate(source = 'CRF')
-
-NPM1 <- npm1_CRF %>% filter(NAME %in% (npm1_ted$NAME))
-#cebpa 
-cebpa_ted <-  cytosearch(x= TED, pattern = "cebpa") %>% mutate(source = 'TED')
-cebpa_CRF <- cytosearch(x= CRF, pattern = "cebpa") %>% mutate(source = 'CRF')
-cebpa <- cebpa_CRF %>% filter(NAME %in% (cebpa_ted$NAME)) 
-
-#create a stak table to select variables
-combined_cyto <- bind_rows(F3,NPM1,cebpa)
-
-#combined at DX and PR
-DX_PR<- combined_cyto[agrepl(combined_cyto$LABEL,pattern = "Diagnosis",fixed = T) | agrepl(combined_cyto$LABEL,pattern = "Between",fixed = T), ]
-
-#write_csv(DX_PR,"LK1801_DXPR.csv")
-
-#write_csv(combined_cyto,"cyto_vars_lk1801.csv")
-
-
-vars <- combined_cyto$NAME
-
-#check For other molecular Markers  (OMOL) omoldxsp found V3  of the CRF
+world_cup %<>% mutate(total = point + point2)
 
 ```
 
-#read CaChes CSV file 
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-cache <- read_csv('LK18-01.csv')
-levels(as.factor(cache$omoldxsp))
 
-#Create  funtion to check variables in the chatacter form
+##string Split
+```{r echo=FALSE, error= FALSE , message= FALSE}
 
-other_cyto <- function(x= omoldxsp,pattern = "RUNX") {
-z <- x[agrepl(pattern,x,ignore.case = T)]
-return(z)
+#sting split
+z <- NA
+for (i in 1:16) {
+ z[i] <- paste("country",as.character(i))
+ 
 }
 
-```
+w1 <- world_cup %>% select(Name,`Round 1 - Top 16`) %>% separate(`Round 1 - Top 16`,z,sep = ",")
+
+data_sweet16 <- world_cup %>% select(Name,point) %>% right_join(w1, by = "Name")
+
+data_sweet16 <- arrange(data_sweet16,point)
+#sum(w1[1,2:17] %in% check)
 
 
-
-# Sting in other Cytogenetics 
-
-#RUNX mutation
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-other_cyto(x=cache$omoldxsp, pattern = "RUNX")
-other_cyto(x=cache$omolprsp, pattern = "RUNX")
-#other_cyto(x=cache$othendpr, pattern = "RUNX")
-#other_cyto(x=cache$othexdx, pattern = "RUNX")
-
-#table(cache$runx1pr)
-```
-
-##ASXL1
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-other_cyto(x=cache$omoldxsp, pattern = "ASXL")
-other_cyto(x=cache$omolprsp, pattern = "ASXL")
-#other_cyto(x=cache$othendpr, pattern = "ASXL")
-#other_cyto(x=cache$othexdx, pattern = "ASXL")
-#table(cache$asxl1dx)
-```
-
-##CEBPA
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-other_cyto(x=cache$omoldxsp, pattern = "CEBPA")
-other_cyto(x=cache$omolprsp, pattern = "CEBPA")
-#other_cyto(x=cache$othendpr, pattern = "CEBPA")
-#other_cyto(x=cache$othexdx, pattern = "CEBPA")
-
-```
-
-
-
-##"npm1"
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-other_cyto(x=cache$omoldxsp, pattern = "npm1")
-other_cyto(x=cache$omolprsp, pattern = "npm1")
-#other_cyto(x=cache$othendpr, pattern = "npm1")
-#other_cyto(x=cache$othexdx, pattern = "npm1")
-```
-
-##"f3id"
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-other_cyto(x=cache$omoldxsp, pattern = "FLT3")
-other_cyto(x=cache$omolprsp, pattern = "FLT3")
-#other_cyto(x=cache$othendpr, pattern = "FLT3")
-#other_cyto(x=cache$othexdx, pattern = "FLT3")
-```
-
-```{r}
-# '/RUNX1|ASXL1/i'
-#cache$omoldxsp[grepl('/RUNX1|ASXL1/i',cache$omoldxsp,perl= TRUE)]
-
-#grepl('/RUNX1|ASXL1/i',cache$omoldxsp,perl= TRUE)
-
-
-
-TED$NAME[grepl("reldtf",TED$NAME)]
 
 
 
 ```
-#MRD Clasification 
-```{r}
-var_mrd <- c('kpspr','graftype','wtpr','htpr','bumeth','rcmvpr','dcmvpr','donorm','donorf', 'myeloabl', 'condclas',  'prelk' ,'leuk2', 'molrempr','flwcytcr','cytrempr')
 
-length(var_mrd)
+#Table and Chart First Round
+```{r echo=FALSE, error= FALSE , message= FALSE}
+p1 <- data_sweet16 %>% arrange(point) %>% ggplot(aes(x=reorder(Name,-point), y= point)) + geom_bar(stat = "identity", aes(fill = point))  +theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) +
+  geom_text(aes(label=point),vjust=0) +
+  scale_fill_distiller(name = "point", palette = "Reds", direction = 1)
 
-length(var_mrd %in%  names(LK1801))
+p2 <- data_sweet16 %>% arrange(point) %>% ggplot(aes(x=Name, y= point, color = Name,fill = Name)) + geom_col() +theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) +
+  geom_text(aes(label=point),vjust=0)
 
+
+#grid.arrange(p1, p2)
+
+
+
+
+p1 
+p2
+
+print(arrange(data_sweet16,point))
+
+arrange(data_sweet16,point)
+
+
+setwd("~/Git_hub/FIFA_worldcup2018")
+write_csv(data_sweet16,"C:/Users/josanchez/Downloads/sweet16.csv")
 ```
-#All relapse var  from TED and CRF
-
-```{r}
-relapse_ted<- TED$NAME[grepl("relapse",TED$LABEL,perl =T,ignore.case = T)]
-
-
-relapse_crf <- CRF$NAME[grepl("relapse",CRF$LABEL,perl =T,ignore.case = T)]
-
-```
-
-
-
-
 
