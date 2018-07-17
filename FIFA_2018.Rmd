@@ -94,6 +94,8 @@ f <- f +1
 
 world_cup %<>% mutate(total = point + point2 + point3+point4 + final)
 
+final_Scores <- arrange(world_cup,desc(total))
+
 write_csv(world_cup,"Finalscores.csv")
 
 
