@@ -22,7 +22,7 @@ library(tidyverse)
 library(gridExtra)
 #install.packages("grid")
 
-setwd("C:/Users/josanchez/Downloads")
+setwd("H:\\Git_hub\\FIFA_worldcup2018")
 
 
 world_cup <- read_csv("World Cup Bracket (Responses) - Form Responses 1.csv") 
@@ -93,6 +93,10 @@ f <- f +1
 #adition of the vectors for the total 
 
 world_cup %<>% mutate(total = point + point2 + point3+point4 + final)
+
+write_csv(world_cup,"Finalscores.csv")
+
+
 
 ```
 
